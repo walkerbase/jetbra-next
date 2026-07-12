@@ -1,4 +1,4 @@
-import { Product } from "@/stores/license-store";
+import type { Product } from "@/stores/license-store";
 
 export function getProductCodes(product: Product): string[] {
   return product.code

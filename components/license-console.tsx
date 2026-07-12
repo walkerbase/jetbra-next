@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useStore } from "@nanostores/react";
+import { useStore } from '@nanostores/react';
 import {
   CalendarDays,
   Check,
@@ -12,22 +12,22 @@ import {
   Search,
   SquareArrowOutUpRight,
   UserRound,
-} from "lucide-react";
-import type React from "react";
-import { useEffect, useMemo, useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
+} from 'lucide-react';
+import type React from 'react';
+import { useEffect, useMemo, useState } from 'react';
+import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { getProductCodes } from "@/lib/helper";
-import { cn } from "@/lib/utils";
+} from '@/components/ui/dialog';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { getProductCodes } from '@/lib/helper';
+import { cn } from '@/lib/utils';
 import {
   $filteredProducts,
   $loading,
@@ -37,8 +37,8 @@ import {
   $selectedCodes,
   type Product,
   toggleProduct,
-} from "@/stores/license-store";
-import { ScrollArea } from "./ui/scroll-area";
+} from '@/stores/license-store';
+import { ScrollArea } from './ui/scroll-area';
 
 export function LicenseConsole() {
   const profile = useStore($profile);
@@ -48,19 +48,19 @@ export function LicenseConsole() {
   const loading = useStore($loading);
   const query = useStore($query);
 
-  const [result, setResult] = useState("");
+  const [result, setResult] = useState('');
   const [dialogOpen, setDialogOpen] = useState(false);
   const [generating, setGenerating] = useState(false);
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
-    const saved = localStorage.getItem("license-demo-profile");
+    const saved = localStorage.getItem('license-demo-profile');
 
     if (saved) {
       $profile.set(JSON.parse(saved));
     }
 
-    fetch("/api/apps")
+    fetch('/api/apps')
       .then(async (response) => {
         const result = await response.json();
 
@@ -69,7 +69,7 @@ export function LicenseConsole() {
           result.code !== 200 ||
           !Array.isArray(result.data)
         ) {
-          throw new Error(result.message ?? "应用列表加载失败");
+          throw new Error(result.message ?? '应用列表加载失败');
         }
 
         return result.data;
@@ -100,23 +100,23 @@ export function LicenseConsole() {
 
   function saveProfile(next: typeof profile) {
     $profile.set(next);
-    localStorage.setItem("license-demo-profile", JSON.stringify(next));
+    localStorage.setItem('license-demo-profile', JSON.stringify(next));
   }
 
   async function generate() {
     setGenerating(true);
 
     try {
-      const response = await fetch("/api/generate-license", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const response = await fetch('/api/generate-license', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           licenseeName: profile.licenseeName,
           assigneeName: profile.assigneeName,
           assigneeEmail: profile.assigneeEmail,
           checkConcurrentUse: false,
-          metadata: "0120230102PPAA013009",
-          hash: "41472961/0:1563609451",
+          metadata: '0120230102PPAA013009',
+          hash: '41472961/0:1563609451',
           gracePeriodDays: 7,
           autoProlongated: true,
           isAutoProlongated: true,
@@ -360,7 +360,7 @@ export function LicenseConsole() {
               ) : (
                 <Copy className="size-4" />
               )}
-              {copied ? "已复制" : "复制激活码"}
+              {copied ? '已复制' : '复制激活码'}
             </Button>
           </div>
         </DialogContent>
@@ -383,7 +383,7 @@ function Field({
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-sm bg-[#37393c] pl-[54px] after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-zinc-500/70 focus-within:after:h-0.5 focus-within:after:bg-[#8fc2ff]",
+        'relative overflow-hidden rounded-sm bg-[#37393c] pl-[54px] after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-zinc-500/70 focus-within:after:h-0.5 focus-within:after:bg-[#8fc2ff]',
         className,
       )}
     >

@@ -4,9 +4,21 @@
     "ignoreUnknown": true,
     "includes": ["**", "!node_modules", "!.next"]
   },
-  "formatter": { "enabled": true, "indentStyle": "space", "indentWidth": 2 },
-  "linter": { "enabled": true, "rules": { "recommended": true } },
+  "formatter": {
+    "enabled": true,
+    "indentStyle": "space",
+    "indentWidth": 2
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "preset": "recommended"
+    }
+  },
   "javascript": {
-    "formatter": { "quoteStyle": "double", "semicolons": "always" }
+    "formatter": {
+      "quoteStyle": "single",
+      "semicolons": "always"
+    }
   }
 }

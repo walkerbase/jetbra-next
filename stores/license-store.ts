@@ -1,4 +1,4 @@
-import { atom, computed } from "nanostores";
+import { atom, computed } from 'nanostores';
 
 export type LicenseProfile = {
   licenseeName: string;
@@ -15,14 +15,14 @@ export interface Product {
 }
 
 export const $profile = atom<LicenseProfile>({
-  licenseeName: "Nsg",
-  assigneeName: "Nsg",
-  assigneeEmail: "Nsg@vvy.net",
-  expiryDate: "2029-01-01",
+  licenseeName: 'Nsg',
+  assigneeName: 'Nsg',
+  assigneeEmail: 'Nsg@vvy.net',
+  expiryDate: '2029-01-01',
 });
 export const $products = atom<Product[]>([]);
 export const $selectedCodes = atom<string[]>([]);
-export const $query = atom("");
+export const $query = atom('');
 export const $loading = atom(true);
 
 export const $filteredProducts = computed(
