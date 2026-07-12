@@ -1,4 +1,16 @@
-.next
-.vsocde
-.idea
 node_modules
+.next
+.git
+.vscode
+
+Dockerfile
+# docker-compose.yml
+
+README.md
+
+*.log
+.env
+.env.local
+
+.env*
+!.env.example
