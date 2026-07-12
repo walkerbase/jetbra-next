@@ -11,7 +11,7 @@ export interface Product {
   name: string;
   code: string;
   description: string;
-  icon?: string;
+  icon: string;
 }
 
 export const $profile = atom<LicenseProfile>({
@@ -40,6 +40,6 @@ export const $filteredProducts = computed(
 
 export function toggleProduct(product: Product, checked: boolean) {
   const current = new Set($selectedCodes.get());
-    checked ? current.add(product.code) : current.delete(product.code);
+  checked ? current.add(product.code) : current.delete(product.code);
   $selectedCodes.set([...current]);
 }

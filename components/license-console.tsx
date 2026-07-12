@@ -13,6 +13,7 @@ import {
   SquareArrowOutUpRight,
   UserRound,
 } from "lucide-react";
+import type React from "react";
 import { useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -26,6 +27,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { getProductCodes } from "@/lib/helper";
+import { cn } from "@/lib/utils";
 import {
   $filteredProducts,
   $loading,
@@ -144,9 +146,9 @@ export function LicenseConsole() {
 
   return (
     <main className="min-h-screen bg-[#17191b] text-zinc-200">
-      <header className="flex h-[70px] items-center justify-between border-b border-white/[0.08] bg-[#202224] px-5 md:px-8">
+      <header className="flex h-[70px] items-center justify-between border-b border-white/8 bg-[#202224] px-5 md:px-8">
         <div className="flex items-center gap-3">
-          <div className="grid size-10 place-items-center rounded-[10px] bg-gradient-to-br from-fuchsia-500 via-rose-500 to-orange-500 text-lg font-black text-white shadow-[0_8px_24px_rgba(0,0,0,0.22)]">
+          <div className="grid size-10 place-items-center rounded-[10px] bg-linear-to-br from-fuchsia-500 via-rose-500 to-orange-500 text-lg font-black text-white shadow-[0_8px_24px_rgba(0,0,0,0.22)]">
             J
           </div>
           <span className="text-[22px] font-semibold tracking-[-0.02em]">
@@ -214,6 +216,7 @@ export function LicenseConsole() {
             <Input
               type="date"
               value={profile.expiryDate}
+              className="dark:[&::-webkit-calendar-picker-indicator]:invert"
               onChange={(event) =>
                 saveProfile({
                   ...profile,
@@ -226,13 +229,14 @@ export function LicenseConsole() {
 
         <p className="mb-3 mt-5 text-[14px] text-zinc-400">已选择的应用</p>
 
-        <ScrollArea className="h-36 w-full rounded-lg border border-white/[0.1] bg-[#181a1c]">
-          <div className="flex flex-wrap gap-1.5 p-4">
+        <ScrollArea className="h-36 w-full rounded-lg border border-white/10 bg-[#181a1c]">
+          <div className="flex flex-wrap gap-1.5 p-4 pr-6">
             {selectedProducts.map((product) => (
               <div
                 key={product.name}
-                className="flex items-center gap-1.5 rounded-[16px] bg-[#25282b] px-2.5 py-1 text-[12px] leading-none text-zinc-200"
+                className="flex items-center gap-1.5 rounded-2xl bg-[#25282b] px-2.5 py-1 text-[12px] leading-none text-zinc-200"
               >
+                {/* biome-ignore lint/performance/noImgElement: 商品图标来自动态外部地址 */}
                 <img src={product.icon} alt="" className="size-4" />
                 <span>{product.name}</span>
               </div>
@@ -240,7 +244,7 @@ export function LicenseConsole() {
           </div>
         </ScrollArea>
 
-        <div className="relative mt-5 overflow-hidden rounded-sm bg-[#37393c] after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-zinc-500/70">
+        <div className="relative mt-5 overflow-hidden rounded-sm bg-[#37393c] after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-zinc-500/70 focus-within:after:h-0.5 focus-within:after:bg-blue-500 after:transition-all">
           <Search className="pointer-events-none absolute left-4 top-1/2 size-[22px] -translate-y-1/2 text-zinc-400" />
           <Input
             className="h-[60px] border-0 bg-transparent pl-14 pr-4 text-[16px] shadow-none ring-0 placeholder:text-zinc-400 focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0"
@@ -275,19 +279,19 @@ export function LicenseConsole() {
           </button>
         </div>
 
-        <div className="h-[375px] overflow-y-auto rounded-lg border border-white/[0.1] bg-[#181a1c]">
+        <ScrollArea className="h-[375px] overflow-y-auto rounded-lg border border-white/10 bg-[#181a1c]">
           {loading ? (
             <div className="grid h-full place-items-center">
               <LoaderCircle className="size-7 animate-spin text-zinc-400" />
             </div>
           ) : (
             filtered.map((product) => {
-              const checked = selected.includes(product.code)
+              const checked = selected.includes(product.code);
 
               return (
                 <Label
                   key={product.name}
-                  className="flex min-h-[62px] cursor-pointer items-center gap-5 px-5 py-2 transition-colors hover:bg-white/[0.045]"
+                  className="flex min-h-[62px] cursor-pointer items-center gap-5 px-5 py-2 transition-colors hover:bg-white/4.5"
                 >
                   <Checkbox
                     checked={checked}
@@ -296,14 +300,14 @@ export function LicenseConsole() {
                       toggleProduct(product, value === true)
                     }
                   />
-
-                  <img src={product.icon} alt="" className="size-9 shrink-0" />
+                  {/* biome-ignore lint/performance/noImgElement: 商品图标来自动态外部地址，保留原生 img 标签 */}
+                  <img src={product.icon} alt="" className="size-8 shrink-0" />
 
                   <span className="min-w-0">
-                    <strong className="block truncate text-[16px] font-medium leading-6 text-zinc-200">
+                    <strong className="block truncate text-[14px] font-medium leading-6 text-zinc-200">
                       {product.name}
                     </strong>
-                    <small className="block truncate text-[13px] leading-5 text-zinc-500">
+                    <small className="block truncate text-[12px] leading-5 text-zinc-500">
                       {product.description}
                     </small>
                   </span>
@@ -311,11 +315,11 @@ export function LicenseConsole() {
               );
             })
           )}
-        </div>
+        </ScrollArea>
 
-        <div className="sticky bottom-0 flex justify-end bg-gradient-to-t from-[#17191b] via-[#17191b] to-transparent py-5">
+        <div className="sticky bottom-12 flex justify-end bg-linear-to-t from-[#17191b] via-[#17191b] to-transparent py-5">
           <Button
-            className="h-[52px] rounded-full bg-[#8fc2ff] px-9 text-[16px] font-medium text-[#17202a] shadow-none hover:bg-[#a9d0ff] focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0"
+            className="h-11 rounded-full bg-[#8fc2ff] px-4 text-[16px] font-medium text-[#17202a] shadow-none hover:bg-[#a9d0ff] focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0"
             disabled={!selected.length || generating}
             onClick={generate}
           >
@@ -330,8 +334,8 @@ export function LicenseConsole() {
       </section>
 
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="z-[100] max-w-xl overflow-hidden rounded-lg border border-white/[0.1] bg-[#202224] p-0 text-zinc-100 shadow-2xl outline-none focus:outline-none focus-visible:outline-none sm:rounded-lg [&>button]:focus:outline-none [&>button]:focus-visible:outline-none [&>button]:focus-visible:ring-0">
-          <DialogHeader className="border-b border-white/[0.08] px-6 py-5">
+        <DialogContent className="z-100 max-w-xl overflow-hidden rounded-lg border border-white/10 bg-[#202224] p-0 text-zinc-100 shadow-2xl outline-none focus:outline-none focus-visible:outline-none sm:rounded-lg [&>button]:focus:outline-none [&>button]:focus-visible:outline-none [&>button]:focus-visible:ring-0">
+          <DialogHeader className="border-b border-white/8 px-6 py-5">
             <DialogTitle className="text-lg font-semibold text-zinc-100">
               已生成
             </DialogTitle>
@@ -369,13 +373,20 @@ function Field({
   icon,
   label,
   children,
+  className,
 }: {
   icon: React.ReactNode;
   label: string;
   children: React.ReactNode;
+  className?: string;
 }) {
   return (
-    <div className="relative overflow-hidden rounded-sm bg-[#37393c] pl-[54px] after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-zinc-500/70 focus-within:after:h-[2px] focus-within:after:bg-[#8fc2ff]">
+    <div
+      className={cn(
+        "relative overflow-hidden rounded-sm bg-[#37393c] pl-[54px] after:absolute after:inset-x-0 after:bottom-0 after:h-px after:bg-zinc-500/70 focus-within:after:h-0.5 focus-within:after:bg-[#8fc2ff]",
+        className,
+      )}
+    >
       <div className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400 [&>svg]:size-[22px]">
         {icon}
       </div>
