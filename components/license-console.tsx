@@ -281,7 +281,7 @@ export function LicenseConsole() {
 
         <ScrollArea className="h-[375px] overflow-y-auto rounded-lg border border-white/10 bg-[#181a1c]">
           {loading ? (
-            <div className="grid h-full place-items-center">
+            <div className="grid h-[375px] place-items-center">
               <LoaderCircle className="size-7 animate-spin text-zinc-400" />
             </div>
           ) : (
