@@ -27,7 +27,7 @@ COPY . .
 ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN pnpm build
-RUN pnpm prune --prod
+# RUN pnpm prune --prod
 
 
 # 生产运行

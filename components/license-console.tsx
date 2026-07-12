@@ -317,7 +317,7 @@ export function LicenseConsole() {
           )}
         </ScrollArea>
 
-        <div className="sticky bottom-12 flex justify-end bg-linear-to-t from-[#17191b] via-[#17191b] to-transparent py-5">
+        <div className="sticky bottom-12 flex justify-end">
           <Button
             className="h-11 rounded-full bg-[#8fc2ff] px-4 text-[16px] font-medium text-[#17202a] shadow-none hover:bg-[#a9d0ff] focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0"
             disabled={!selected.length || generating}
