@@ -1,24 +1,24 @@
-import { NextResponse } from "next/server";
+import { NextResponse } from 'next/server';
 
-const APPS_API_URL = "https://jetbrains.ankio.net/apps";
+const APPS_API_URL = 'https://jetbrains.ankio.net/apps';
 
-export const dynamic = "force-dynamic";
+export const dynamic = 'force-dynamic';
 
 export async function GET() {
   try {
     const response = await fetch(APPS_API_URL, {
       headers: {
-        Accept: "application/json",
-        "User-Agent": "jetbrains-license-ui",
+        Accept: 'application/json',
+        'User-Agent': 'jetbrains-license-ui',
       },
-      cache: "no-store",
+      cache: 'no-store',
       signal: AbortSignal.timeout(20_000),
     });
 
     const text = await response.text();
 
     if (!response.ok) {
-      console.error("Apps upstream request failed:", {
+      console.error('Apps upstream request failed:', {
         status: response.status,
         body: text,
       });
@@ -26,7 +26,7 @@ export async function GET() {
       return NextResponse.json(
         {
           code: 502,
-          message: "上游应用接口请求失败",
+          message: '上游应用接口请求失败',
           upstreamStatus: response.status,
         },
         { status: 502 },
@@ -37,16 +37,16 @@ export async function GET() {
 
     return NextResponse.json(data, {
       headers: {
-        "Cache-Control": "no-store",
+        'Cache-Control': 'no-store',
       },
     });
   } catch (error) {
-    console.error("Apps proxy error:", error);
+    console.error('Apps proxy error:', error);
 
     return NextResponse.json(
       {
         code: 500,
-        message: "无法获取应用列表",
+        message: '无法获取应用列表',
       },
       { status: 500 },
     );
